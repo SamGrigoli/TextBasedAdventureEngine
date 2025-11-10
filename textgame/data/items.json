@@ -1,0 +1,69 @@
+{
+  "items": [
+    {
+      "id": "Rusty_Key",
+      "name": "Rusty Key",
+      "desc": "Old and corroded.",
+      "portable": true
+    },
+    {
+      "id": "lantern",
+      "name": "Lantern",
+      "desc": "wow this thing is really bright",
+      "portable": true
+    },
+    {
+      "id": "paper towels",
+      "name": "Paper Towels",
+      "desc": "A paper towels.",
+      "portable": true
+    },
+    {
+      "id": "toilet paper",
+      "name": "Toilet Paper",
+      "desc": "Why does it smell so bad?",
+      "portable": true
+    },
+    {
+      "id": "tooth brush",
+      "name": "Tooth Brush",
+      "desc": "A tooth brush.",
+      "portable": true
+    },
+    {
+      "id": "simple key",
+      "name": "Simple Key",
+      "desc": "A simple key.",
+      "portable": true
+    },
+    {
+      "id": "dirty sock",
+      "name": "Dirty Sock",
+      "desc": "A dirty sock.",
+      "portable": true
+    },
+    {
+      "id": "lamp",
+      "name": "Lamp",
+      "desc": "Lights the way.",
+      "portable": false
+    },
+    {
+      "id": "pants",
+      "name": "Pants",
+      "desc": "Baggy AF"
+    },
+    {
+      "id": "gloves",
+      "name": "Gloves",
+      "desc": "They dont fit",
+      "portable": true
+    },
+    {
+      "id": "lighter",
+      "name": "Lighter",
+      "desc": "A Lighter.",
+      "portable": true
+    }
+  ]
+}
