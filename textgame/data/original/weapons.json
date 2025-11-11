@@ -25,16 +25,11 @@
       "damage": 10
     },
     {
-      "id": "hall",
-      "name": "spoon",
-      "desc": "very large",
-      "damage": 10
-    },
-    {
-      "id": "hall",
+      "id": "spoon",
       "name": "spoon",
       "desc": "very large",
       "damage": 10
     }
+  
   ]
 }

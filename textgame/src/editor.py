@@ -248,7 +248,7 @@ def add_enemy():
     messagebox.showinfo("Added", f"Enemy {enemy_name} added.")
 
 def add_weapon():
-    weapon_id = simpledialog.askstring("Weapon ID", "Enter weapon ID (Must be same as room ID):")
+    weapon_id = simpledialog.askstring("Weapon ID", "Enter weapon ID:")
     if not weapon_id: return
     weapon_name = simpledialog.askstring("Weapon Name", "Enter weapon name:")
     if not weapon_name: return
@@ -345,8 +345,8 @@ def edit_player():
     new_name = simpledialog.askstring("Player Name", "Enter player name:", initialvalue=player.get("name", "Player"))
     if new_name is None: return  # User cancelled
     
-    new_desc = simpledialog.askstring("Player Description", "Enter player description:", initialvalue=player.get("desc", "It's you!"))
-    if new_desc is None: return
+    #new_desc = simpledialog.askstring("Player Description", "Enter player description:", initialvalue=player.get("desc", "It's you!"))
+    #if new_desc is None: return
     
     new_health = simpledialog.askinteger("Player Health", "Enter player health:", initialvalue=player.get("health", 100), minvalue=1)
     if new_health is None: return
@@ -356,7 +356,7 @@ def edit_player():
     
     # Update player data
     player["name"] = new_name
-    player["desc"] = new_desc
+    #player["desc"] = new_desc
     player["health"] = new_health
     player["damage"] = new_damage
     
@@ -530,20 +530,6 @@ def load_game():
         messagebox.showerror("Load Error", f"Error loading game files:\n{str(e)}")
         current_game_dir = None
 
-def play_game():
-    if not current_game_dir:
-        messagebox.showwarning("No Game Loaded", "Please load a game first!")
-        return
-
-    exe_name = "textgame.exe" if os.name == "nt" else "textgame"
-    engine_exe = os.path.join(os.path.dirname(__file__), exe_name)
-
-    if not os.path.exists(engine_exe):
-        messagebox.showerror("Executable Missing", f"Expected engine executable not found:\n{engine_exe}")
-        return
-
-    # Pass the current game directory as a command-line argument
-    subprocess.Popen([engine_exe, current_game_dir])
 
 
 
@@ -613,10 +599,10 @@ tk.Button(frame_extras, text="Add Item", command=add_item).pack(side="left", pad
 tk.Button(frame_extras, text="Add Weapon", command=add_weapon).pack(side="left", padx=5)
 tk.Button(frame_extras, text="Edit Player", command=edit_player).pack(side="left", padx=5)
 
-btn_play = tk.Button(root, text="Play Game", command=play_game, bg="#4CAF50", fg="white", font=("Arial", 12, "bold"))
-btn_play.pack(pady=10)
+#btn_play = tk.Button(root, text="Play Game", command=play_game, bg="#4CAF50", fg="white", font=("Arial", 12, "bold"))
+#btn_play.pack(pady=10)
 
-root.mainloop()
+#root.mainloop()
 
 
 # -- Undo Actions Section --

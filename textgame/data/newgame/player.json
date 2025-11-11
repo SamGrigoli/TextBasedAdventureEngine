@@ -2,7 +2,7 @@
   "players": [
     {
       "id": "player",
-      "name": "Player",
+      "name": "Sammy",
       "desc": "It's you!",
       "health": 100,
       "damage": 5

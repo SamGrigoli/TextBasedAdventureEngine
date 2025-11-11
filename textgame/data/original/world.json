@@ -1,5 +1,5 @@
 {
-  "startRoom": "",
+  "startRoom": "hall",
   "rooms": [
     {
       "id": "hall",

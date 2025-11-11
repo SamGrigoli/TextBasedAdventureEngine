@@ -6,8 +6,12 @@
       "name": "Common",
       "desc": "plain room",
       "exits": {},
-      "items": [],
-      "weapons": [],
+      "items": [
+        "lamp"
+      ],
+      "weapons": [
+        "axe"
+      ],
       "locks": [],
       "triggers": []
     }
