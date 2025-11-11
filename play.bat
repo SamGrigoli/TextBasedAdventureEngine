@@ -39,4 +39,3 @@ if not exist "..\data\%gamename%\" (
 :: Run the game
 textgame.exe "..\data\%gamename%"
 
-pause
