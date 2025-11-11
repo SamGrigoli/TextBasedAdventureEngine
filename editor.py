@@ -18,13 +18,13 @@ else:
 GAMES_DIR = os.path.join(BASE_DIR, "..", "data")
 os.makedirs(GAMES_DIR, exist_ok=True)
 
-WORLD_FILE = "textgame/data/world.json"
-ITEMS_FILE = "textgame/data/items.json"
-PICTURES_FILE = "textgame/data/pictures.json"
-ENEMIES_FILE = "textgame/data/enemies.json"
-WEAPONS_FILE = "textgame/data/weapons.json"
-PLAYER_FILE = "textgame/data/player.json"
-LOADGAME_FILE = "textgame/data/loadgame.json"
+WORLD_FILE = "../data/world.json"
+ITEMS_FILE = "../data/items.json"
+PICTURES_FILE = "../data/pictures.json"
+ENEMIES_FILE = "../data/enemies.json"
+WEAPONS_FILE = "../data/weapons.json"
+PLAYER_FILE = "../data/player.json"
+LOADGAME_FILE = "../data/loadgame.json"
 ENGINE_EXE = "textgame.exe" if platform.system() == "Windows" else "./textgame"
 
 # Ensure world file exists

@@ -1,5 +1,5 @@
 ('C:\\Users\\samgr\\OneDrive\\Desktop\\Masters '
- 'Project\\editor\\build\\editor\\PYZ-00.pyz',
+ 'Project\\build\\editor\\PYZ-00.pyz',
  [('__future__',
    'C:\\Users\\samgr\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\__future__.py',
    'PYMODULE'),
