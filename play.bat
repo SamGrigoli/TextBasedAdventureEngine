@@ -4,7 +4,7 @@ echo ============================
 echo.
 
 :: Check if games directory exists
-if not exist "data\" (
+if not exist "..\data\" (
     echo Error: games folder not found!
     echo Please run the editor first to create a game.
     pause
@@ -15,7 +15,7 @@ if not exist "data\" (
 echo Available games:
 echo.
 set count=0
-for /d %%G in ("data\*") do (
+for /d %%G in ("..\data\*") do (
     set /a count+=1
     echo [!count!] %%~nxG
 )
@@ -30,13 +30,13 @@ if %count%==0 (
 echo.
 set /p gamename="Enter the name of the game you want to play: "
 
-if not exist "data\%gamename%\" (
+if not exist "..\data\%gamename%\" (
     echo Error: Game '%gamename%' not found!
     pause
     exit /b 1
 )
 
 :: Run the game
-textgame.exe "data\%gamename%"
+textgame.exe "..\data\%gamename%"
 
 pause
