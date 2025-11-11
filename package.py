@@ -11,7 +11,7 @@ def create_distribution():
     
     os.makedirs(f"{dist_name}/editor")
     os.makedirs(f"{dist_name}/engine")
-    os.makedirs(f"{dist_name}/games")
+    os.makedirs(f"{dist_name}/data")
     
     # Copy editor executable
     shutil.copy("dist/GameEditor.exe", f"{dist_name}/editor/")
@@ -19,6 +19,9 @@ def create_distribution():
     # Copy game engine
     shutil.copy("textgame.exe", f"{dist_name}/engine/")
     shutil.copy("play.bat", f"{dist_name}/engine/")
+
+    # Copy data files
+    shutil.copytree("textgame/data/", f"{dist_name}/data/", dirs_exist_ok=True)
     
     # Copy README
     shutil.copy("README.txt", f"{dist_name}/")

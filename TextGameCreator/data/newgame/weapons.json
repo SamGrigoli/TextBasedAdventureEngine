@@ -1,0 +1,10 @@
+{
+  "weapons": [
+    {
+      "id": "axe",
+      "name": "Axe",
+      "desc": "sturdy",
+      "damage": 15
+    }
+  ]
+}

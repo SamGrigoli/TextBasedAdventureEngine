@@ -1,0 +1,19 @@
+{
+  "startRoom": "room1",
+  "rooms": [
+    {
+      "id": "room1",
+      "name": "Common",
+      "desc": "plain room",
+      "exits": {},
+      "items": [
+        "lamp"
+      ],
+      "weapons": [
+        "axe"
+      ],
+      "locks": [],
+      "triggers": []
+    }
+  ]
+}
