@@ -1,6 +1,7 @@
 # Compiler and flags
 CXX = g++
 CXXFLAGS = -std=c++17 -Itextgame/include -Itextgame/third_party/json-develop/single_include
+LDFLAGS = -static -static-libgcc -static-libstdc++
 
 # Source and object files
 SRC = $(wildcard textgame/src/*.cpp)
@@ -14,7 +15,7 @@ all: $(TARGET)
 
 # Link object files
 $(TARGET): $(OBJ)
-	$(CXX) $(CXXFLAGS) $^ -o $@
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ -o $@
 
 # Compile .cpp to .o
 %.o: %.cpp
