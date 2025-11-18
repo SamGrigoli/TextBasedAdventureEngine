@@ -546,6 +546,240 @@ def load_game():
         current_game_dir = None
 
 
+import tkinter as tk
+from tkinter import messagebox, simpledialog, filedialog, Canvas, Scrollbar
+import json
+import os
+
+def visualize_world():
+    """Create a visual representation of the world map"""
+    if not current_game_dir:
+        messagebox.showwarning("No Game", "Please create or load a game first.")
+        return
+    
+    try:
+        world_data = load_world()
+    except:
+        messagebox.showerror("Error", "Could not load world data.")
+        return
+    
+    if not world_data.get("rooms"):
+        messagebox.showinfo("Empty World", "No rooms to visualize. Create some rooms first!")
+        return
+    
+    # Create visualization window
+    viz_window = tk.Toplevel(root)
+    viz_window.title("World Map Visualization")
+    viz_window.geometry("900x700")
+    
+    # Create canvas with scrollbars
+    frame = tk.Frame(viz_window)
+    frame.pack(fill=tk.BOTH, expand=True)
+    
+    canvas = Canvas(frame, bg="white", scrollregion=(0, 0, 2000, 2000))
+    
+    h_scrollbar = Scrollbar(frame, orient=tk.HORIZONTAL, command=canvas.xview)
+    h_scrollbar.pack(side=tk.BOTTOM, fill=tk.X)
+    
+    v_scrollbar = Scrollbar(frame, orient=tk.VERTICAL, command=canvas.yview)
+    v_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+    
+    canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+    canvas.config(xscrollcommand=h_scrollbar.set, yscrollcommand=v_scrollbar.set)
+    
+    # Layout algorithm - simple grid-based with auto-positioning
+    positions = auto_layout_rooms(world_data["rooms"])
+    
+    # Draw connections (exits) first so they appear behind rooms
+    for room in world_data["rooms"]:
+        room_id = room["id"]
+        if room_id not in positions:
+            continue
+        
+        x1, y1 = positions[room_id]
+        
+        for direction, target_id in room.get("exits", {}).items():
+            if target_id in positions:
+                x2, y2 = positions[target_id]
+                
+                # Draw arrow
+                canvas.create_line(x1, y1, x2, y2, arrow=tk.LAST, fill="gray", width=2)
+                
+                # Draw direction label
+                mid_x, mid_y = (x1 + x2) / 2, (y1 + y2) / 2
+                canvas.create_text(mid_x, mid_y, text=direction, fill="blue", font=("Arial", 9))
+    
+    # Draw rooms
+    start_room = world_data.get("startRoom", "")
+    
+    for room in world_data["rooms"]:
+        room_id = room["id"]
+        if room_id not in positions:
+            continue
+        
+        x, y = positions[room_id]
+        
+        # Room color based on properties
+        color = "lightgreen" if room_id == start_room else "lightblue"
+        
+        # Check for special features
+        has_enemy = any(enemy["id"] == room_id for enemy in load_enemies().get("enemies", []))
+        has_items = len(room.get("items", [])) > 0
+        has_weapons = len(room.get("weapons", [])) > 0
+        has_locks = len(room.get("locks", [])) > 0
+        
+        if has_enemy:
+            color = "lightcoral"
+        elif has_locks:
+            color = "lightyellow"
+        
+        # Draw room box
+        rect = canvas.create_rectangle(x-60, y-40, x+60, y+40, fill=color, outline="black", width=2)
+        
+        # Room name
+        canvas.create_text(x, y-20, text=room["name"], font=("Arial", 10, "bold"), width=110)
+        
+        # Room ID (smaller)
+        canvas.create_text(x, y, text=f"({room_id})", font=("Arial", 8), fill="gray")
+        
+        # Icons for features
+        icon_y = y + 15
+        icons = []
+        if has_enemy:
+            icons.append("⚔️")
+        if has_items:
+            icons.append("📦")
+        if has_weapons:
+            icons.append("🗡️")
+        if has_locks:
+            icons.append("🔒")
+        
+        if icons:
+            canvas.create_text(x, icon_y, text=" ".join(icons), font=("Arial", 12))
+        
+        # Make rooms clickable
+        def on_room_click(event, r=room):
+            show_room_details(r)
+        
+        canvas.tag_bind(rect, "<Button-1>", on_room_click)
+    
+    # Add legend
+    legend_x, legend_y = 20, 20
+    canvas.create_rectangle(legend_x, legend_y, legend_x + 200, legend_y + 180, fill="white", outline="black")
+    canvas.create_text(legend_x + 100, legend_y + 15, text="Legend", font=("Arial", 12, "bold"))
+    
+    legend_items = [
+        ("🟢 Start Room", "lightgreen"),
+        ("🔵 Normal Room", "lightblue"),
+        ("🔴 Enemy Room", "lightcoral"),
+        ("🟡 Locked Room", "lightyellow"),
+        ("⚔️ Has Enemy", "white"),
+        ("📦 Has Items", "white"),
+        ("🗡️ Has Weapons", "white"),
+        ("🔒 Has Locks", "white"),
+    ]
+    
+    for i, (text, color) in enumerate(legend_items):
+        y = legend_y + 35 + (i * 18)
+        if color != "white":
+            canvas.create_rectangle(legend_x + 10, y - 6, legend_x + 30, y + 6, fill=color, outline="black")
+        canvas.create_text(legend_x + 40, y, text=text, anchor="w", font=("Arial", 9))
+
+def auto_layout_rooms(rooms):
+    """Automatically position rooms in a grid layout based on connections"""
+    if not rooms:
+        return {}
+    
+    positions = {}
+    placed = set()
+    
+    # Start with the first room at center
+    start_room = rooms[0]["id"]
+    positions[start_room] = (1000, 1000)  # Center of canvas
+    placed.add(start_room)
+    
+    # Direction offsets
+    direction_offsets = {
+        "north": (0, -150),
+        "south": (0, 150),
+        "east": (150, 0),
+        "west": (-150, 0),
+        "northeast": (150, -150),
+        "northwest": (-150, -150),
+        "southeast": (150, 150),
+        "southwest": (-150, 150),
+        "up": (0, -100),
+        "down": (0, 100),
+    }
+    
+    # Keep placing rooms until all are placed
+    max_iterations = 100
+    iteration = 0
+    
+    while len(placed) < len(rooms) and iteration < max_iterations:
+        iteration += 1
+        
+        for room in rooms:
+            if room["id"] in placed:
+                # Try to place connected rooms
+                current_pos = positions[room["id"]]
+                
+                for direction, target_id in room.get("exits", {}).items():
+                    if target_id not in placed:
+                        # Calculate position based on direction
+                        offset = direction_offsets.get(direction.lower(), (150, 0))
+                        new_x = current_pos[0] + offset[0]
+                        new_y = current_pos[1] + offset[1]
+                        
+                        # Check if position is already taken
+                        pos_taken = False
+                        for existing_pos in positions.values():
+                            if abs(existing_pos[0] - new_x) < 50 and abs(existing_pos[1] - new_y) < 50:
+                                pos_taken = True
+                                break
+                        
+                        if not pos_taken:
+                            positions[target_id] = (new_x, new_y)
+                            placed.add(target_id)
+    
+    # Place any remaining unconnected rooms in a grid
+    unplaced = [r["id"] for r in rooms if r["id"] not in placed]
+    grid_x, grid_y = 1000, 200
+    
+    for i, room_id in enumerate(unplaced):
+        positions[room_id] = (grid_x + (i % 5) * 150, grid_y + (i // 5) * 150)
+    
+    return positions
+
+def show_room_details(room):
+    """Show detailed information about a room in a popup"""
+    details = f"Room: {room['name']}\n"
+    details += f"ID: {room['id']}\n"
+    details += f"Description: {room['desc']}\n\n"
+    
+    if room.get("exits"):
+        details += "Exits:\n"
+        for direction, target in room["exits"].items():
+            details += f"  {direction} → {target}\n"
+        details += "\n"
+    
+    if room.get("items"):
+        details += f"Items: {', '.join(room['items'])}\n"
+    
+    if room.get("weapons"):
+        details += f"Weapons: {', '.join(room['weapons'])}\n"
+    
+    if room.get("locks"):
+        details += "Locks:\n"
+        for lock in room["locks"]:
+            details += f"  {lock['exit']} requires {lock['requires']}\n"
+    
+    messagebox.showinfo(f"Room: {room['name']}", details)
+
+
+
+
+
 
 
 # --- Tkinter UI ---
@@ -624,6 +858,13 @@ tk.Button(frame_extras, text="Edit Player", command=edit_player).pack(side="left
 frame_undo = tk.LabelFrame(root, text="Undo Actions", padx=10, pady=10)
 frame_undo.pack(padx=10, pady=5, fill="x")
 tk.Button(frame_undo, text="Delete Room", command=delete_room).pack(side="left", padx=5)
+
+
+frame_view = tk.LabelFrame(root, text="Visualization", padx=10, pady=10)
+frame_view.pack(padx=10, pady=5, fill="x")
+
+tk.Button(frame_view, text="View World Map", command=visualize_world, 
+          bg="lightblue", font=("Arial", 11, "bold")).pack(pady=5)
 
 
 # Initialize dropdown
