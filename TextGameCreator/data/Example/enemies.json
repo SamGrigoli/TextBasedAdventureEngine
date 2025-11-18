@@ -2,7 +2,7 @@
   "enemies": [
     {
       "id": "Basement",
-      "name": "fart goblin",
+      "name": "Goblin",
       "desc": "ew he stinky",
       "health": 100,
       "damage": 15
