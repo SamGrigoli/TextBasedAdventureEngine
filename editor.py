@@ -263,35 +263,58 @@ def add_enemy():
     messagebox.showinfo("Added", f"Enemy {enemy_name} added.")
 
 def add_weapon():
-    weapon_id = simpledialog.askstring("Weapon ID", "Enter weapon ID (Must be same as room ID):")
+    if not current_game_dir:
+        messagebox.showwarning("No Game", "Please create or load a game first.")
+        return
+    
+    weapon_id = simpledialog.askstring("Weapon ID", "Enter weapon ID (e.g., 'sword', 'axe'):")
     if not weapon_id: return
-    weapon_name = simpledialog.askstring("Weapon Name", "Enter weapon name:")
+    
+    weapon_name = simpledialog.askstring("Weapon Name", "Enter weapon name(Most simple to make same as ID and avoid spaces): ")
     if not weapon_name: return
+    
     weapon_desc = simpledialog.askstring("Weapon Description", "Enter weapon description:")
     if not weapon_desc: return
+    
     weapon_damage = simpledialog.askinteger("Weapon Damage", "Enter weapon damage (integer):", minvalue=1)
     if not weapon_damage: return
 
+    # Always add to weapons.json first
     weapons_data = load_weapons()
-    world_data = load_world()
-    for room in world_data["rooms"]:
-        if room["id"] == weapon_id:
-            room["weapons"].append(weapon_name)
-            weapons_data["weapons"].append({
-
-                "id": weapon_id,
-                "name": weapon_name,
-                "desc": weapon_desc,
-                "damage": weapon_damage
-            })
-            save_world(world_data)
-            break
-    
-        
-   
+    weapons_data["weapons"].append({
+        "id": weapon_id,
+        "name": weapon_name,
+        "desc": weapon_desc,
+        "damage": weapon_damage
+    })
     save_weapons(weapons_data)
     
-    messagebox.showinfo("Added", f"Weapon {weapon_name} added.")
+    # Ask if they want to place it in a room
+    place_in_room = messagebox.askyesno("Place in Room?", 
+                                        f"Weapon '{weapon_name}' added to weapons.json.\n\n"
+                                        "Do you want to place it in a room?")
+    
+    if place_in_room:
+        room_id = simpledialog.askstring("Room ID", "Enter room ID to place weapon in:")
+        if room_id:
+            world_data = load_world()
+            room_found = False
+            
+            for room in world_data["rooms"]:
+                if room["id"] == room_id:
+                    if "weapons" not in room:
+                        room["weapons"] = []
+                    # Store by weapon_id (not room_id, not weapon_name)
+                    room["weapons"].append(weapon_id)
+                    save_world(world_data)
+                    room_found = True
+                    messagebox.showinfo("Success", f"Weapon '{weapon_name}' placed in room '{room_id}'.")
+                    break
+            
+            if not room_found:
+                messagebox.showwarning("Room Not Found", f"Room '{room_id}' not found. Weapon is in weapons.json but not placed in any room.")
+    else:
+        messagebox.showinfo("Added", f"Weapon '{weapon_name}' added to weapons.json.")
 
 def add_lock():
     room_id = simpledialog.askstring("Room ID", "Enter room ID to add lock:")
