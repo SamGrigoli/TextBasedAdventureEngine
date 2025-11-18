@@ -327,13 +327,14 @@ void Engine::doGo(const std::string& dir) {
 }
 
 void Engine::doTake(const std::string& what) {
-    //Check if item
     Room* r = const_cast<Room*>(state->room());
+    
+    // Check if item
     auto it = std::find(r->items.begin(), r->items.end(), what);
     if (it != r->items.end()) {
         const auto* def = world.getItem(what);
         if (def && !def->portable) { 
-            std::cout << "You can't take that here."; 
+            std::cout << "You can't take that."; 
             return; 
         }
         state->inv().add(what);
@@ -346,39 +347,36 @@ void Engine::doTake(const std::string& what) {
     std::string whatLower = what;
     std::transform(whatLower.begin(), whatLower.end(), whatLower.begin(), ::tolower);
     
-    // Loop through weapons actually in the room
+    // Loop through weapons in the room
     for (auto wit = r->weapons.begin(); wit != r->weapons.end(); ++wit) {
-        std::string weaponId = *wit;
         const auto* weaponDef = world.getWeapon(*wit);
         
-        // Check if matches by ID
+        // Check if matches by ID (case insensitive)
         std::string idLower = *wit;
         std::transform(idLower.begin(), idLower.end(), idLower.begin(), ::tolower);
         
         if (idLower == whatLower) {
-            state->weapons().add(weaponId);  // Add by actual ID
+            state->weapons().add(*wit);
             r->weapons.erase(wit);
-            std::cout << "You picked up the " << (weaponDef ? weaponDef->name : weaponId) << ".\n";
+            std::cout << "You picked up the " << (weaponDef ? weaponDef->name : *wit) << ".\n";
             return;
         }
         
-        // Check if matches by name
+        // Check if matches by name (case insensitive)
         if (weaponDef) {
             std::string nameLower = weaponDef->name;
             std::transform(nameLower.begin(), nameLower.end(), nameLower.begin(), ::tolower);
             
             if (nameLower == whatLower) {
-                state->weapons().add(*wit);  // Add by actual ID
+                state->weapons().add(*wit);  // Store by ID
                 r->weapons.erase(wit);
                 std::cout << "You picked up the " << weaponDef->name << ".\n";
                 return;
             }
         }
     }
-
     
-    std::cout << "No such weapon here.";
-    
+    std::cout << "You don't see that here.\n";
 }
 
 void Engine::doDrop(const std::string& what) {

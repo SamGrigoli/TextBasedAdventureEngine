@@ -263,7 +263,7 @@ def add_enemy():
     messagebox.showinfo("Added", f"Enemy {enemy_name} added.")
 
 def add_weapon():
-    weapon_id = simpledialog.askstring("Weapon ID", "Enter weapon ID:")
+    weapon_id = simpledialog.askstring("Weapon ID", "Enter weapon ID (Must be same as room ID):")
     if not weapon_id: return
     weapon_name = simpledialog.askstring("Weapon Name", "Enter weapon name:")
     if not weapon_name: return

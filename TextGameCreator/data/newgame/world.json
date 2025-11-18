@@ -10,7 +10,9 @@
         "lamp"
       ],
       "weapons": [
-        "axe"
+        "axe",
+        "sword",
+        "bow"
       ],
       "locks": [],
       "triggers": []

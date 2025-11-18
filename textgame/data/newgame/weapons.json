@@ -1,10 +1,22 @@
 {
   "weapons": [
     {
-      "id": "axe",
+      "id": "room1",
       "name": "Axe",
       "desc": "sturdy",
       "damage": 15
+    },
+    {
+      "id": "room1",
+      "name": "sword",
+      "desc": "pointy",
+      "damage": 100
+    },
+    {
+      "id": "room1",
+      "name": "bow",
+      "desc": "something",
+      "damage": 20
     }
   ]
 }
