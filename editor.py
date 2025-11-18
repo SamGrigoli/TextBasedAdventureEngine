@@ -824,7 +824,7 @@ tk.Label(frame_room, text="Description:").grid(row=2, column=0, sticky="nw")
 entry_room_desc = tk.Text(frame_room, width=40, height=3)
 entry_room_desc.grid(row=2, column=1)
 
-tk.Label(frame_room, text="Exits (dir:room,...):").grid(row=3, column=0, sticky="w")
+tk.Label(frame_room, text="Exits (dir:roomID,...):").grid(row=3, column=0, sticky="w")
 entry_exits = tk.Entry(frame_room, width=40)
 entry_exits.grid(row=3, column=1)
 
