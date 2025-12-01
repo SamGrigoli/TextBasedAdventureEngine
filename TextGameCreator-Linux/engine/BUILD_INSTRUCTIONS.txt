@@ -1,4 +1,0 @@
-To build the Linux game engine:
-1. Transfer source files to Linux
-2. Run: make clean && make
-3. Copy the 'textgame' binary here
