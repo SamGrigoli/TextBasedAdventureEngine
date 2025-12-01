@@ -1,0 +1,19 @@
+{
+  "enemies": [
+    {
+      "id": "Basement",
+      "name": "Goblin",
+      "desc": "ew he stinky",
+      "health": 100,
+      "damage": 15
+    },
+    {
+      "id": "hall",
+      "name": "Tinder Date",
+      "desc": "They dont look like their photos!",
+      "health": 50,
+      "damage": 10
+    }
+    
+  ]
+}

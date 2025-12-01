@@ -1,0 +1,11 @@
+{
+  "players": [
+    {
+      "id": "player",
+      "name": "Player",
+      "desc": "It's you!",
+      "health": 100,
+      "damage": 5
+    }
+  ]
+}

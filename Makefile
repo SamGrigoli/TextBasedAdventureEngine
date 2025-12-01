@@ -1,3 +1,12 @@
+# Detect OS
+ifeq ($(OS),Windows_NT)
+    EXE = .exe
+    RM = del /F
+else
+    EXE =
+    RM = rm -f
+endif
+
 # Compiler and flags
 CXX = g++
 CXXFLAGS = -std=c++17 -Itextgame/include -Itextgame/third_party/json-develop/single_include
@@ -8,7 +17,7 @@ SRC = $(wildcard textgame/src/*.cpp)
 OBJ = $(SRC:.cpp=.o)
 
 # Output executable
-TARGET = textgame.exe
+TARGET = textgame$(EXE)
 
 # Default build target
 all: $(TARGET)
@@ -24,8 +33,8 @@ $(TARGET): $(OBJ)
 # Clean build artifacts
 clean:
 	-@echo Cleaning up...
-	-@if exist $(TARGET) del /F $(TARGET)
-	-@rm -f textgame/src/*.o
+	-@$(RM) $(TARGET)
+	-@$(RM) textgame/src/*.o
 
 # Run the game with correct working directory
 run: $(TARGET)

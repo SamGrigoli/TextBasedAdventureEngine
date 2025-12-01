@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox, simpledialog, filedialog
 import json, subprocess, platform, sys
 import os
+import platform
 
 
 
