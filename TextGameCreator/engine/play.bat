@@ -37,5 +37,5 @@ if not exist "..\data\%gamename%\" (
 )
 
 :: Run the game
-textgame.exe "..\data\%gamename%"
+textadventure.exe "..\data\%gamename%"
 
