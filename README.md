@@ -46,7 +46,7 @@ engine/   → Contains the game engine
    ```
    make
    ```
-4. This will produce **`textgame.exe`** along with an example game.
+4. This will produce **`textadventure`** along with an example game.
 5. *(Optional)* To package the game engine + editor, run:
    ```
    python package.py
