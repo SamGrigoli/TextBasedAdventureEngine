@@ -36,7 +36,7 @@ def create_distribution():
     shutil.copytree("textgame/data/", f"{dist_name}/data/", dirs_exist_ok=True)
     
     # Copy README
-    shutil.copy("README.txt", f"{dist_name}/")
+    shutil.copy("README.md", f"{dist_name}/")
     
     # Create zip
     shutil.make_archive(dist_name, 'zip', dist_name)

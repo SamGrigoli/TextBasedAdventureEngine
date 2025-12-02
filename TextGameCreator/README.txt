@@ -14,26 +14,13 @@ PLAYING A GAME:
 3. Enter the name of the game you want to play
 4. Enjoy!
 
-FOLDER STRUCTURE:
-- editor/ : Contains the game editor
-- data/  : Your saved games go here
-- engine/ : Contains the game engine
+HELP WHEN MAKING GAME:
+1. When setting start room that is JUST THE ROOM YOU START IN, not the room you are currently editing
+2. When making exits make sure you are connecting to other rooms using the ROOMID
+   (Ex. north:roomid that you want to go to)
+3. There is not a way to delete items and weapons after you place them in a room, you will have to delete the whole room. Bad design I know...
+4. If you are ever confused as to how to interect with someting there is a "help" command in the game itself that should solve any issues
+5. Enemies that you make in the game will attack you randomly after every action you make. After they die their text remains in the room. Also bad design...
+6. You must equip a weapon to use it. You can check your weapons with the "weapons" command and you can check your currently equipped weapon with "status"
 
-REQUIREMENTS:
-- Windows 10 or later (for Windows version)
-- No additional software required
-
-HOW TO BUILD PROJECT:
-1. Make sure you have "make" installed and g++ (17 or higher) is in your PATH or is easily accessible
-2. Make sure you navigate to the root of the projects directory
-3. Once in root directory simply run make
-4. This should create a file named textgame.exe to run
-5. From here you can type in path to the game data folder you would like to play
-
-Things to note when building:
-- If all of your .o files or .exe are not being created it is likely that you do not have the correct version of g++.
-- If you want to run "make clean" it will not work unless the .exe is already created.
-- The folders labled TextGameCreator and TextGameCreator.zip are full builds of the program that work independently.
-   Running these should always work but have nothing to do with the build process.
-
-
+PLEASE ENJOY! ITS NOT PERFECT BUT I HOPE YOU CAN MAKE SOME COOL GAMES WITH THIS TOOL!
