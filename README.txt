@@ -1,39 +1,99 @@
-TEXT ADVENTURE GAME CREATOR
-============================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Text Adventure Game Creator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+        line-height: 1.6;
+        background-color: #f7f7f7;
+    }
+    h1, h2 {
+        color: #333;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 5px;
+    }
+    ul, ol {
+        margin-left: 20px;
+    }
+    .section {
+        background: #fff;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 8px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    code {
+        background: #eee;
+        padding: 2px 4px;
+        border-radius: 4px;
+    }
+</style>
+</head>
 
-GETTING STARTED (PLUG AND PLAY):
-1. Extract the TextGameCreator.zip somewhere easily accessible 
-2. Run "editor/GameEditor.exe" to create or edit games
-3. Use File > New Game to create a new game
-4. Build your world by adding rooms, items, enemies, and weapons
-5. Save your game in the "data" folder
+<body>
 
-PLAYING A GAME:
-1. Navigate to the "engine" folder in a terminal
-2. Run "play.bat" (Windows)
-3. Enter the name of the game you want to play
-4. Enjoy!
+<h1>TEXT ADVENTURE GAME CREATOR</h1>
 
-FOLDER STRUCTURE:
-- editor/ : Contains the game editor
-- data/  : Your saved games go here
-- engine/ : Contains the game engine
+<div class="section">
+    <h2>Getting Started (Plug and Play)</h2>
+    <ol>
+        <li>Extract <code>TextGameCreator.zip</code> somewhere easily accessible.</li>
+        <li>Run <code>editor/GameEditor.exe</code> to create or edit games.</li>
+        <li>Use <strong>File &gt; New Game</strong> to create a new game.</li>
+        <li>Build your world by adding rooms, items, enemies, and weapons.</li>
+        <li>Save your game in the <code>data</code> folder.</li>
+    </ol>
+</div>
 
-REQUIREMENTS:
-- Windows 10 or later (for Windows version)
-- No additional software required
+<div class="section">
+    <h2>Playing a Game</h2>
+    <ol>
+        <li>Navigate to the <code>engine</code> folder in a terminal.</li>
+        <li>Run <code>play.bat</code> (Windows).</li>
+        <li>Enter the name of the game you want to play.</li>
+        <li>Enjoy!</li>
+    </ol>
+</div>
 
-HOW TO BUILD PROJECT:
-1. Make sure you have "make" installed and g++ (17 or higher) is in your PATH or is easily accessible
-2. Make sure you navigate to the root of the projects directory
-3. Once in root directory simply run make
-4. This should create a file named textgame.exe to run
-5. From here you can type in path to the game data folder you would like to play
+<div class="section">
+    <h2>Folder Structure</h2>
+    <ul>
+        <li><code>editor/</code> – Contains the game editor</li>
+        <li><code>data/</code> – Your saved games go here</li>
+        <li><code>engine/</code> – Contains the game engine</li>
+    </ul>
+</div>
 
-Things to note when building:
-- If all of your .o files or .exe are not being created it is likely that you do not have the correct version of g++.
-- If you want to run "make clean" it will not work unless the .exe is already created.
-- The folders labled TextGameCreator and TextGameCreator.zip are full builds of the program that work independently.
-   Running these should always work but have nothing to do with the build process.
+<div class="section">
+    <h2>How to Build the Project</h2>
 
+    <h3>Requirements:</h3>
+    <ul>
+        <li>make</li>
+        <li>g++ (version 17 or higher)</li>
+        <li>python (version 3 or higher)</li>
+    </ul>
 
+    <h3>Instructions:</h3>
+    <ol>
+        <li>Make sure you have <code>make</code> installed and <code>g++</code> is in your PATH.</li>
+        <li>Navigate to the root of the project directory.</li>
+        <li>Run <code>make</code>.</li>
+        <li>This will create <code>textgame.exe</code> with an example game.</li>
+        <li>(Optional) To package the editor + engine for distribution, run <code>python package.py</code>.</li>
+        <li>Navigate to <code>TextGameCreator</code> and run either the editor or engine.</li>
+    </ol>
+
+    <h3>Things to Note:</h3>
+    <ul>
+        <li>If .o files or the .exe aren’t being created, you may have the wrong version of g++.</li>
+        <li><code>make clean</code> will not work unless the .exe already exists.</li>
+        <li>The <code>TextGameCreator.zip</code> file is a full build that works independently.</li>
+    </ul>
+</div>
+
+</body>
+</html>

@@ -17,7 +17,7 @@ SRC = $(wildcard textgame/src/*.cpp)
 OBJ = $(SRC:.cpp=.o)
 
 # Output executable
-TARGET = textgame$(EXE)
+TARGET = textadventure$(EXE)
 
 # Default build target
 all: $(TARGET)

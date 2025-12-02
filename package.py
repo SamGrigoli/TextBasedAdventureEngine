@@ -1,6 +1,18 @@
 import os
 import shutil
 import zipfile
+import platform
+
+# Detect OS
+if os.name == "nt":  # Windows
+    EXE = ".exe"
+    RM = "del /F"
+else:  # macOS / Linux / BSD
+    EXE = ""
+    RM = "rm -f"
+
+print("EXE =", EXE)
+print("RM =", RM)
 
 def create_distribution():
     dist_name = "TextGameCreator"
@@ -14,10 +26,10 @@ def create_distribution():
     os.makedirs(f"{dist_name}/data")
     
     # Copy editor executable
-    shutil.copy("dist/GameEditor.exe", f"{dist_name}/editor/")
+    shutil.copy(f"dist/GameEditor{EXE}", f"{dist_name}/editor/")
     
     # Copy game engine
-    shutil.copy("textgame.exe", f"{dist_name}/engine/")
+    shutil.copy(f"textadventure{EXE}", f"{dist_name}/engine/")
     shutil.copy("play.bat", f"{dist_name}/engine/")
 
     # Copy data files
